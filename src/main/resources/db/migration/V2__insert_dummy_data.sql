@@ -1,0 +1,41 @@
+-- dummy data for books
+insert into books (title, qty) values ('Made in Heaven', 7);
+insert into books (title, qty) values ('Villain, The', 2);
+insert into books (title, qty) values ('Nine Miles Down', 3);
+insert into books (title, qty) values ('Farmer''s Wife, The', 4);
+insert into books (title, qty) values ('Square, The', 16);
+insert into books (title, qty) values ('Lost Patrol, The', 6);
+insert into books (title, qty) values ('Katze im Sack', 19);
+insert into books (title, qty) values ('Bilitis', 2);
+insert into books (title, qty) values ('Wild Animals (Yasaeng dongmul bohoguyeog)', 5);
+insert into books (title, qty) values ('Blue Like Jazz', 20);
+insert into books (title, qty) values ('My Life in Pink (Ma vie en rose)', 27);
+insert into books (title, qty) values ('Fanfan la Tulipe (Fan-Fan the Tulip)', 27);
+insert into books (title, qty) values ('[REC]²', 23);
+insert into books (title, qty) values ('Wall Street: Money Never Sleeps', 23);
+insert into books (title, qty) values ('Kein Bund für''s Leben', 21);
+insert into books (title, qty) values ('Dean Spanley', 15);
+insert into books (title, qty) values ('Little Thief, The (Le petit voleur)', 5);
+insert into books (title, qty) values ('Like Mike', 13);
+insert into books (title, qty) values ('Idiot Box', 5);
+insert into books (title, qty) values ('The Disembodied', 30);
+insert into books (title, qty) values ('Cold Around the Heart', 24);
+insert into books (title, qty) values ('Anatomy of a Love Seen', 29);
+insert into books (title, qty) values ('Once My Mother', 8);
+
+-- dummy data for users
+insert into users (name, email) values ('Arel', 'amcaleese0@reverbnation.com');
+insert into users (name, email) values ('Bunni', 'bmcgrudder1@google.com.br');
+insert into users (name, email) values ('Winona', 'wivashchenko2@sfgate.com');
+insert into users (name, email) values ('Dacy', 'darpin3@about.me');
+insert into users (name, email) values ('Rozelle', 'rdunckley4@icq.com');
+insert into users (name, email) values ('Kimberlee', 'kwaggett5@berkeley.edu');
+insert into users (name, email) values ('Daryl', 'dtrengove6@ft.com');
+insert into users (name, email) values ('Carmon', 'cpimm7@bloglovin.com');
+insert into users (name, email) values ('Berky', 'bskittreal8@nifty.com');
+insert into users (name, email) values ('Lacie', 'ltattersall9@ft.com');
+insert into users (name, email) values ('Seline', 'sloudona@nhs.uk');
+insert into users (name, email) values ('Hodge', 'hrueggb@gizmodo.com');
+insert into users (name, email) values ('Morton', 'mcrummyc@tiny.cc');
+insert into users (name, email) values ('Sigfrid', 'slamborned@stumbleupon.com');
+insert into users (name, email) values ('Thatcher', 'tgoodlete@reverbnation.com');
