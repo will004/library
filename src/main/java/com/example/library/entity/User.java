@@ -1,8 +1,6 @@
 package com.example.library.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,7 +10,6 @@ import java.time.Instant;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "users")
 public class User {
@@ -21,10 +18,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
     private String email;
 
     @CreationTimestamp
