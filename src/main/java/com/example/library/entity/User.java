@@ -1,16 +1,19 @@
 package com.example.library.entity;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.Instant;
 
 @Data
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
+@Accessors(chain = true)
 @Table(name = "users")
 public class User {
 
@@ -19,22 +22,17 @@ public class User {
     private Long id;
 
     @NonNull
-    @Column(name = "name")
     private String name;
 
     @NonNull
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "created_at")
     @CreationTimestamp
-    private Date created_at;
+    private Instant createdAt;
 
-    @Column(name = "updated_at")
     @UpdateTimestamp
-    private Date updated_at;
+    private Instant updatedAt;
 
-    @Column(name = "deleted_at")
-    private Date deleted_at;
+    private Instant deletedAt;
 
 }
