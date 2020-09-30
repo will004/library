@@ -1,5 +1,6 @@
 package com.example.library.controller;
 
+import com.example.library.dto.UserDTO;
 import com.example.library.entity.User;
 import com.example.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,22 @@ public class UserController {
     private UserService userService;
 
     @GetMapping()
-    public List<User> userList(){
+    public List<UserDTO> userList(){
        return userService.findAllUser();
     }
 
     @PostMapping()
-    public User create(@RequestBody User request){
+    public UserDTO create(@RequestBody UserDTO request){
         return userService.create(request);
     }
 
     @GetMapping("/{id}")
-    public User get(@PathVariable Long id){
+    public UserDTO get(@PathVariable Long id){
         return userService.getUser(id);
     }
 
+    @PutMapping("/{id}")
+    public UserDTO update(@PathVariable Long id, @RequestBody UserDTO request){
+        return userService.update(id, request);
+    }
 }
