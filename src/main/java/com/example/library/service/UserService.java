@@ -61,6 +61,17 @@ public class UserService {
         return convertToDto(userRepository.save(updatedUser));
     }
 
+    public UserDTO delete(Long id){
+        User user = userRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new BaseErrorException(HttpStatus.NOT_FOUND,
+                        ErrorMessage.USER_NOT_FOUND.getMessage()));
+
+        // delete
+        userRepository.save(user.setDeletedAt(Instant.now()));
+
+        return convertToDto(user);
+    }
+
     /*
     *
     * Private methods
