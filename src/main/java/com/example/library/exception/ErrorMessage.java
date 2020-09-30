@@ -1,7 +1,8 @@
 package com.example.library.exception;
 
 public enum ErrorMessage {
-    USER_NOT_FOUND("Username does not exist");
+    USER_NOT_FOUND("Username does not exist"),
+    BOOK_NOT_FOUND("Book does not exist");
 
     private String message;
 
