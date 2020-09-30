@@ -26,13 +26,8 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<UserDTO> findAllUser() {
-        return userRepository.findAllByDeletedAtIsNull().stream().map(u -> {
-            return new UserDTO()
-                    .setId(u.getId())
-                    .setName(u.getName())
-                    .setEmail(u.getEmail())
-                    .setCreatedAt(u.getCreatedAt().toString())
-                    .setUpdatedAt(u.getUpdatedAt().toString());
+        return userRepository.findAllByDeletedAtIsNull().stream().map(user -> {
+            return convertToDto(user);
         }).collect(Collectors.toList());
     }
 
