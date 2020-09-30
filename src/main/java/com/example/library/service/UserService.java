@@ -6,6 +6,7 @@ import com.example.library.exception.BaseErrorException;
 import com.example.library.exception.ErrorMessage;
 import com.example.library.mapper.UserMapper;
 import com.example.library.repository.UserRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class UserService {
         }).collect(Collectors.toList());
     }
 
-    public UserDTO getUser(Long id) {
+    public UserDTO getUser(@NonNull Long id) {
         User user = userRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new BaseErrorException(HttpStatus.NOT_FOUND,
                         ErrorMessage.USER_NOT_FOUND.getMessage()));
@@ -56,28 +57,26 @@ public class UserService {
         return convertToDto(userRepository.save(updatedUser));
     }
 
-    public UserDTO delete(Long id){
+    public UserDTO delete(Long id) {
         User user = userRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new BaseErrorException(HttpStatus.NOT_FOUND,
                         ErrorMessage.USER_NOT_FOUND.getMessage()));
 
         // delete
-        userRepository.save(user.setDeletedAt(Instant.now()));
-
-        return convertToDto(user);
+        return convertToDto(userRepository.save(user.setDeletedAt(Instant.now())));
     }
 
     /*
-    *
-    * Private methods
-    *
-    * */
+     *
+     * Private methods
+     *
+     * */
 
-    private UserDTO convertToDto(User user){
+    private UserDTO convertToDto(User user) {
         return userMapper.userToUserDTO(user);
     }
 
-    private User convertToEntity(UserDTO userDTO){
+    private User convertToEntity(UserDTO userDTO) {
         return userMapper.userDtoToUser(userDTO);
     }
 }
