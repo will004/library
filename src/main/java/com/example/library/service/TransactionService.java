@@ -46,7 +46,7 @@ public class TransactionService {
             throw new BaseErrorException(HttpStatus.NOT_FOUND, ErrorMessage.BOOK_OUT_OF_STOCK.getMessage());
         }
 
-        updateBookQty(request);
+        updateBookQty(request, TransactionType.BORROW);
 
         // save to db
         TransactionHeader transactionHeader = new TransactionHeader()
@@ -66,6 +66,23 @@ public class TransactionService {
 
     @Transactional
     public void returnBook(TransactionDTO request) {
+
+        updateBookQty(request, TransactionType.RETURN);
+
+        TransactionHeader transactionHeader =  new TransactionHeader()
+                .setTransactionDate(Instant.now())
+                .setReturnDate(convertStringToInstant(request.getReturnDate()))
+                .setUserId(request.getUserId());
+        transactionHeaderRepository.save(transactionHeader);
+
+        List<TransactionDetail> transactionDetails = request.getBookIds().stream()
+                .map(bookId -> new TransactionDetail()
+                        .setBookId(bookId)
+                        .setHeaderId(transactionHeader.getId()))
+                .collect(Collectors.toList());
+
+        transactionDetailRepository.saveAll(transactionDetails);
+
     }
 
     private Instant convertStringToInstant(String date) {
@@ -101,12 +118,16 @@ public class TransactionService {
                 .getQty() > 0);
     }
 
-    private void updateBookQty(TransactionDTO request) {
+    private void updateBookQty(TransactionDTO request, TransactionType type) {
+        int n;
+        if (type.equals(TransactionType.BORROW)) n = -1;
+        else n = 1;
+
         request.getBookIds().stream()
         .forEach(bookId -> {
             Book bookToUpdated = bookRepository.findByIdAndDeletedAtIsNull(bookId)
                     .orElseThrow(() -> new BaseErrorException(HttpStatus.BAD_REQUEST, ErrorMessage.BOOK_NOT_FOUND.getMessage()));
-            bookToUpdated.setQty(bookToUpdated.getQty() - 1);
+            bookToUpdated.setQty(bookToUpdated.getQty() + n);
             bookRepository.save(bookToUpdated);
         });
     }
