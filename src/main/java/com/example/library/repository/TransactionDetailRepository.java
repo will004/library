@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface TransactionDetailRepository extends JpaRepository<TransactionDetail, Long> {
     List<TransactionDetail> findAllByDeletedAtIsNull();
-    List<TransactionDetail> findAllByHeaderIdIn(List<Long> headerIds);
+    List<TransactionDetail> findAllByHeaderIdInAndDeletedAtIsNull(List<Long> headerIds);
     Optional<TransactionDetail> findByIdAndDeletedAtIsNull(Long id);
 }

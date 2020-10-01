@@ -13,4 +13,5 @@ public interface TransactionHeaderRepository extends JpaRepository<TransactionHe
     List<TransactionHeader> findAllByUserIdAndDeletedAtIsNull(Long userId);
     List<TransactionHeader> findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(Long userId);
     Optional<TransactionHeader> findByIdAndDeletedAtIsNull(Long id);
+    Optional<TransactionHeader> findByUserIdAndReturnDateIsNull(Long userId);
 }
