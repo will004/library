@@ -90,19 +90,6 @@ public class TransactionService {
         }
 
         return true;
-
-//        List<Long> transactionHeaderIds = transactionHeaderRepository.findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(userId)
-//                .stream()
-//                .map(TransactionHeader::getId)
-//                .collect(Collectors.toList());
-//        Set<Long> bookIds = transactionDetailRepository.findAllByHeaderIdInAndDeletedAtIsNull(transactionHeaderIds)
-//                .stream()
-//                .map(TransactionDetail::getBookId)
-//                .collect(Collectors.toSet());
-
-        // Collections.disjoint returns false when has intersection, so we flip the boolean
-        // user already borrow the book(s) if the collections have intersection, so we have to return true
-//        return !Collections.disjoint(bookIds, request.getBookIds());
     }
 
     private boolean isBookAvailable(TransactionDTO request) {
