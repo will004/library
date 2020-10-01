@@ -69,20 +69,10 @@ public class TransactionService {
 
         updateBookQty(request, TransactionType.RETURN);
 
-        TransactionHeader transactionHeader =  new TransactionHeader()
-                .setTransactionDate(Instant.now())
-                .setReturnDate(convertStringToInstant(request.getReturnDate()))
-                .setUserId(request.getUserId());
-        transactionHeaderRepository.save(transactionHeader);
+        TransactionHeader transactionHeader = transactionHeaderRepository.findByUserIdAndReturnDateIsNull(request.getUserId())
+                .orElseThrow(() -> new BaseErrorException(HttpStatus.BAD_REQUEST, ErrorMessage.TRANSACTION_NOT_FOUND.getMessage()));
 
-        List<TransactionDetail> transactionDetails = request.getBookIds().stream()
-                .map(bookId -> new TransactionDetail()
-                        .setBookId(bookId)
-                        .setHeaderId(transactionHeader.getId()))
-                .collect(Collectors.toList());
-
-        transactionDetailRepository.saveAll(transactionDetails);
-
+        transactionHeaderRepository.save(transactionHeader.setReturnDate(convertStringToInstant(request.getReturnDate())));
     }
 
     private Instant convertStringToInstant(String date) {
@@ -95,18 +85,24 @@ public class TransactionService {
     private boolean alreadyBorrow(TransactionDTO request){
         Long userId = request.getUserId();
 
-        List<Long> transactionHeaderIds = transactionHeaderRepository.findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(userId)
-                .stream()
-                .map(TransactionHeader::getId)
-                .collect(Collectors.toList());
-        Set<Long> bookIds = transactionDetailRepository.findAllByHeaderIdIn(transactionHeaderIds)
-                .stream()
-                .map(TransactionDetail::getBookId)
-                .collect(Collectors.toSet());
+        if (transactionHeaderRepository.findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(userId).isEmpty()) {
+            return false;
+        }
+
+        return true;
+
+//        List<Long> transactionHeaderIds = transactionHeaderRepository.findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(userId)
+//                .stream()
+//                .map(TransactionHeader::getId)
+//                .collect(Collectors.toList());
+//        Set<Long> bookIds = transactionDetailRepository.findAllByHeaderIdInAndDeletedAtIsNull(transactionHeaderIds)
+//                .stream()
+//                .map(TransactionDetail::getBookId)
+//                .collect(Collectors.toSet());
 
         // Collections.disjoint returns false when has intersection, so we flip the boolean
         // user already borrow the book(s) if the collections have intersection, so we have to return true
-        return !Collections.disjoint(bookIds, request.getBookIds());
+//        return !Collections.disjoint(bookIds, request.getBookIds());
     }
 
     private boolean isBookAvailable(TransactionDTO request) {
