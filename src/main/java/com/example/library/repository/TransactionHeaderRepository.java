@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface TransactionHeaderRepository extends JpaRepository<TransactionHeader, Long> {
     List<TransactionHeader> findAllByDeletedAtIsNull();
     List<TransactionHeader> findAllByUserIdAndDeletedAtIsNull(Long userId);
+    List<TransactionHeader> findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(Long userId);
     Optional<TransactionHeader> findByIdAndDeletedAtIsNull(Long id);
 }

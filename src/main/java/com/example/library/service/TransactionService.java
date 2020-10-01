@@ -78,7 +78,7 @@ public class TransactionService {
     private boolean alreadyBorrow(TransactionDTO request){
         Long userId = request.getUserId();
 
-        List<Long> transactionHeaderIds = transactionHeaderRepository.findAllByUserIdAndDeletedAtIsNull(userId)
+        List<Long> transactionHeaderIds = transactionHeaderRepository.findAllByUserIdAndReturnDateIsNullAndDeletedAtIsNull(userId)
                 .stream()
                 .map(TransactionHeader::getId)
                 .collect(Collectors.toList());
