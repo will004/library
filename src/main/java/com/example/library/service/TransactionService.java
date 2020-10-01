@@ -106,6 +106,7 @@ public class TransactionService {
         if (type.equals(TransactionType.BORROW)) n = -1;
         else n = 1;
 
+        // if book does not exist, it will throw error here
         request.getBookIds().stream()
         .forEach(bookId -> {
             Book bookToUpdated = bookRepository.findByIdAndDeletedAtIsNull(bookId)
